@@ -1,6 +1,8 @@
 package agh.ics.oop;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class World {
     // do 14. punktu
@@ -18,81 +20,74 @@ public class World {
     public static void run2(String[] directions) {
         for (String direction : directions) {
             switch (direction) {
-                case "f":
-                    System.out.println("Zwierzak idzie do przodu");
-                    break;
-                case "b":
-                    System.out.println("Zwierzak idzie do tyłu");
-                    break;
-                case "r":
-                    System.out.println("Zwierzak skręca w prawo");
-                    break;
-                case "l":
-                    System.out.println("Zwierzak skręca w lewo");
-                    break;
+                case "f" -> System.out.println("Zwierzak idzie do przodu");
+                case "b" -> System.out.println("Zwierzak idzie do tyłu");
+                case "r" -> System.out.println("Zwierzak skręca w prawo");
+                case "l" -> System.out.println("Zwierzak skręca w lewo");
             }
         }
     }
 
-    public static void run(ArrayList<Direction> directions) {
-        for (Direction direction : directions) {
-            switch (direction) {
-                case FORWARD:
-                    System.out.println("Zwierzak idzie do przodu");
-                    break;
-                case BACKWARD:
-                    System.out.println("Zwierzak idzie do tyłu");
-                    break;
-                case RIGHT:
-                    System.out.println("Zwierzak skręca w prawo");
-                    break;
-                case LEFT:
-                    System.out.println("Zwierzak skręca w lewo");
-                    break;
-                case NONE:
-                default:
-                    break;
-            }
-        }
-    }
+    // ==============================================================================================================
 
     public static Direction convertStringToDirection(String string) {
         switch (string) {
-            case "f":
-                return Direction.FORWARD;
-            case "b":
-                return Direction.BACKWARD;
-            case "r":
-                return Direction.RIGHT;
-            case "l":
-                return Direction.LEFT;
-            default:
-                return Direction.NONE;
+            case "f" -> { return Direction.FORWARD; }
+            case "b" -> { return Direction.BACKWARD; }
+            case "r" -> { return Direction.RIGHT; }
+            case "l" -> { return Direction.LEFT; }
+            default -> { return Direction.NONE; }
         }
     }
 
     public static ArrayList<Direction> convertStringToDirection(String[] strings) {
         ArrayList<Direction> directions = new ArrayList<>();
 
-        for (String string : strings)
-            directions.add(convertStringToDirection(string));
+        for (String string : strings) {
+            Direction direction = convertStringToDirection(string);
+            if (direction != Direction.NONE)
+                directions.add(direction);
+        }
 
         return directions;
     }
-    
+
+    public static void run(Direction direction) {
+        switch (direction) {
+            case FORWARD -> System.out.println("Zwierzak idzie do przodu");
+            case BACKWARD -> System.out.println("Zwierzak idzie do tyłu");
+            case RIGHT -> System.out.println("Zwierzak skręca w prawo");
+            case LEFT -> System.out.println("Zwierzak skręca w lewo");
+        }
+    }
+
+    public static void run(ArrayList<Direction> directions) {
+        for (Direction direction : directions) {
+            run(direction);
+        }
+    }
+
+    // rozwiązanie w oparciu o stream
+    public static void streamSolution(String[] strings) {
+        List<String> stringsList = Arrays.asList(strings);
+
+        stringsList
+                .stream()
+                .map(World::convertStringToDirection)
+                .forEach(World::run);
+    }
+
     public static void main(String[] args) {
         System.out.println("Start");
 
-//        System.out.println("Do 14. punktu");
 //        run1(args);
-//        System.out.println();
 
-//        System.out.println("Do 16. punktu");
 //        run2(args);
-//        System.out.println();
 
-        ArrayList<Direction> directions = convertStringToDirection(args);
-        run(directions);
+//        ArrayList<Direction> directions = convertStringToDirection(args);
+//        run(directions);
+
+        streamSolution(args);
 
         System.out.println("Stop");
     }
