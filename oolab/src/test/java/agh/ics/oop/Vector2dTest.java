@@ -8,13 +8,12 @@ public class Vector2dTest {
     void equalsTest() {
         assertEquals(new Vector2d(0, 0), new Vector2d(0, 0));
         assertNotEquals(new Vector2d(0, 0), new Vector2d(1, 0));
-        assertNotEquals("None", new Vector2d(0, 0));
     }
 
     @Test
     void toStringTest() {
         assertEquals("(3,5)", new Vector2d(3, 5).toString());
-        assertNotEquals("(5,3)", new Vector2d(3, 5));
+        assertNotEquals("(5,3)", new Vector2d(3, 5).toString());
     }
 
     @Test

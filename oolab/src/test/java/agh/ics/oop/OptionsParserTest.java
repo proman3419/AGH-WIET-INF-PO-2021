@@ -1,7 +1,6 @@
 package agh.ics.oop;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 import static agh.ics.oop.MoveDirection.*;
@@ -24,8 +23,8 @@ public class OptionsParserTest {
         parseTest(new MoveDirection[]{LEFT}, new String[]{"l"});
         parseTest(new MoveDirection[]{RIGHT}, new String[]{"r"});
 
-        parseTest(new MoveDirection[]{}, new String[]{"asdf"});
-        parseTest(new MoveDirection[]{FORWARD, BACKWARD}, new String[]{"f", "asdf", "b"});
+        parseTest(new MoveDirection[]{}, new String[]{"nonsense"});
+        parseTest(new MoveDirection[]{FORWARD, BACKWARD}, new String[]{"f", "nonsense", "b"});
         parseTest(new MoveDirection[]{FORWARD, BACKWARD, LEFT, RIGHT}, new String[]{"f", "b", "l", "r"});
     }
 }
