@@ -1,9 +1,5 @@
 package agh.ics.oop;
 
-import java.util.Map;
-
-import static java.lang.Math.abs;
-
 public enum MapDirection {
     NORTH,
     EAST,
@@ -39,7 +35,7 @@ public enum MapDirection {
     }
 
     public static void main(String[] args) {
-        MapDirection md = MapDirection.EAST;
+        MapDirection md = EAST;
         System.out.println(md.next());
         System.out.println(md.previous());
         System.out.println(md.toUnitVector());

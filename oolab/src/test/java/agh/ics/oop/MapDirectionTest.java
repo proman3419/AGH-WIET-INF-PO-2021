@@ -3,10 +3,7 @@ package agh.ics.oop;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import static agh.ics.oop.MapDirection.NORTH;
-import static agh.ics.oop.MapDirection.SOUTH;
-import static agh.ics.oop.MapDirection.WEST;
-import static agh.ics.oop.MapDirection.EAST;
+import static agh.ics.oop.MapDirection.*;
 
 public class MapDirectionTest {
     @Test

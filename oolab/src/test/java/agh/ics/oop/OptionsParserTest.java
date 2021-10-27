@@ -26,6 +26,6 @@ public class OptionsParserTest {
 
         parseTest(new MoveDirection[]{}, new String[]{"asdf"});
         parseTest(new MoveDirection[]{FORWARD, BACKWARD}, new String[]{"f", "asdf", "b"});
-        parseTest(new MoveDirection[]{FORWARD, BACKWARD, LEFT, MoveDirection.RIGHT}, new String[]{"f", "b", "l", "r"});
+        parseTest(new MoveDirection[]{FORWARD, BACKWARD, LEFT, RIGHT}, new String[]{"f", "b", "l", "r"});
     }
 }
