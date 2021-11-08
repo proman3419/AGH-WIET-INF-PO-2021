@@ -33,11 +33,4 @@ public enum MapDirection {
             case EAST -> new Vector2d(1, 0);
         };
     }
-
-    public static void main(String[] args) {
-        MapDirection md = EAST;
-        System.out.println(md.next());
-        System.out.println(md.previous());
-        System.out.println(md.toUnitVector());
-    }
 }
