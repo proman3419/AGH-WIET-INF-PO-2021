@@ -4,7 +4,23 @@ import java.util.ArrayList;
 
 public class Animal {
     private MapDirection orientation = MapDirection.NORTH;
-    private Vector2d position = new Vector2d(2,2);
+    private Vector2d position = new Vector2d(0,0); // Domyślna pozycja jedyna, którą możemy zagwarantować dla każdej mapy
+    private final IWorldMap map;
+
+    // Konstruktor bez parametrów tylko na potrzeby testów
+    public Animal() {
+        this.position = new Vector2d(2, 2);
+        this.map = new RectangularMap(5, 5);
+    }
+
+    public Animal(IWorldMap map) {
+        this.map = map;
+    }
+
+    public Animal(IWorldMap map, Vector2d initialPosition) {
+        this.map = map;
+        this.position = initialPosition;
+    }
 
     public MapDirection getOrientation() {
         return orientation;
@@ -15,7 +31,12 @@ public class Animal {
     }
 
     public String toString() {
-        return String.format("pozycja: %s, kierunek: %s", this.position, this.orientation);
+        return switch (this.orientation) {
+            case NORTH -> "^";
+            case EAST -> ">";
+            case SOUTH -> "v";
+            case WEST -> "<";
+        };
     }
 
     public Animal move(MoveDirection direction) {
@@ -28,7 +49,7 @@ public class Animal {
                     unitVector = unitVector.opposite();
                 Vector2d newPosition = this.position.add(unitVector);
 
-                if (newPosition.follows(new Vector2d(0, 0)) && newPosition.precedes(new Vector2d(4, 4)))
+                if (this.map.canMoveTo(newPosition))
                     this.position = newPosition;
             }
         }

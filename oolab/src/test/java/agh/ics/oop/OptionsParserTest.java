@@ -1,14 +1,15 @@
 package agh.ics.oop;
 
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
+
+import java.util.List;
 
 import static agh.ics.oop.MoveDirection.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OptionsParserTest {
     void parseTest(MoveDirection[] expected, String[] input) {
-        ArrayList<MoveDirection> output = new OptionsParser().parse(input);
+        List<MoveDirection> output = new OptionsParser().parse(input);
 
         assertEquals(expected.length, output.size());
 
