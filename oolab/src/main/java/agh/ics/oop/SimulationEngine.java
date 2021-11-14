@@ -8,8 +8,13 @@ public class SimulationEngine implements IEngine {
     private final IWorldMap map;
     private final List<Animal> animals;
 
-    public List<Animal> getAnimals() {
-        return animals;
+    public List<Vector2d> getAnimalsPositions() {
+        List<Vector2d> animalsPositions = new ArrayList<>();
+
+        for (Animal animal : this.animals)
+            animalsPositions.add(animal.getPosition());
+
+        return animalsPositions;
     }
 
     public SimulationEngine(List<MoveDirection> directions, IWorldMap map, List<Vector2d> positions) {
