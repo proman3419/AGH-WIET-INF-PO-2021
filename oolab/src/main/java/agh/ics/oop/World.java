@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class World {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         List<MoveDirection> directions = new OptionsParser().parse(args);
         IWorldMap map = new RectangularMap(10, 5);
         List<Vector2d> positions = new ArrayList<>(Arrays.asList(new Vector2d(2, 2), new Vector2d(3, 4)));

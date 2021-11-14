@@ -13,5 +13,5 @@ public interface IEngine {
      * n-th direction should be sent to the n-th animal on the map.
      *
      */
-    void run();
+    void run() throws InterruptedException;
 }

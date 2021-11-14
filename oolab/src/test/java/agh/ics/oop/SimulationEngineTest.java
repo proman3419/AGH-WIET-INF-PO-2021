@@ -20,7 +20,7 @@ public class SimulationEngineTest {
     }
 
     @Test
-    void runTest() {
+    void runTest() throws InterruptedException {
         List<MoveDirection> directions = new OptionsParser().parse(new String[]{"f", "b", "r", "l", "f", "f", "r", "r",
                 "f", "f", "f", "f", "f", "f", "f", "f"});
         IWorldMap map = new RectangularMap(10, 5);
@@ -34,7 +34,7 @@ public class SimulationEngineTest {
     }
 
     @Test
-    void runTest2() {
+    void runTest2() throws InterruptedException {
         List<MoveDirection> directions = new OptionsParser().parse(new String[]{"r", "f", "l", "l", "l", "f", "f", "r",
                 "b", "l", "f", "f", "f", "r", "l", "b"});
         IWorldMap map = new RectangularMap(10, 17);
@@ -48,7 +48,7 @@ public class SimulationEngineTest {
     }
 
     @Test
-    void runTest3() {
+    void runTest3() throws InterruptedException {
         List<MoveDirection> directions = new OptionsParser().parse(new String[]{"b", "f", "r", "f", "f", "f", "f", "r",
                 "b", "r", "l", "b", "f", "r", "l", "f", "f", "f", "r", "f", "b", "f", "l", "r", "f", "f", "f", "f", "f",
                 "f", "l", "l", "r", "r", "b", "b", "f", "l", "l", "r", "r", "b", "b", "f", "f", "f", "f", "r", "f", "l",
