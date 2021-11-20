@@ -35,6 +35,15 @@ public class Animal extends AbstractWorldMapElement {
         };
     }
 
+    private boolean eatAttempt(Object objectAt, Vector2d newPosition) {
+        if (objectAt instanceof Grass) {
+            ((AbstractWorldMap) this.map).mapElements.remove(objectAt);
+            return true;
+        }
+
+        return false;
+    }
+
     public Animal move(MoveDirection direction) {
         switch (direction) {
             case RIGHT -> this.orientation = this.orientation.next();
@@ -45,8 +54,15 @@ public class Animal extends AbstractWorldMapElement {
                     unitVector = unitVector.opposite();
                 Vector2d newPosition = this.position.add(unitVector);
 
-                if (this.map.canMoveTo(newPosition))
-                    this.position = newPosition;
+                if (this.map.canMoveTo(newPosition)) {
+                    Object objectAt = this.map.objectAt(newPosition);
+
+                    if (objectAt == null || objectAt instanceof Grass)
+                        this.position = newPosition;
+
+                    if (eatAttempt(objectAt, newPosition))
+                        ((GrassField) this.map).spawnGrass();
+                }
             }
         }
 

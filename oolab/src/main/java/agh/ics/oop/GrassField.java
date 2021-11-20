@@ -6,8 +6,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GrassField extends AbstractWorldMap {
+    private final int maxCoord;
+
+
     public GrassField(int grassFieldsCount) {
-        int maxCoord = (int) Math.ceil(Math.sqrt(grassFieldsCount*10));
+        this.maxCoord = (int) Math.ceil(Math.sqrt(grassFieldsCount*10));
 
         List<Integer> xs = IntStream.rangeClosed(0, maxCoord).boxed().collect(Collectors.toList());
         List<Integer> ys = IntStream.rangeClosed(0, maxCoord).boxed().collect(Collectors.toList());
@@ -41,5 +44,16 @@ public class GrassField extends AbstractWorldMap {
         }
 
         return super.toString();
+    }
+
+    public void spawnGrass() {
+        Vector2d position = this.lowerLeft;
+        do {
+            int x = (int) (Math.random() * this.maxCoord);
+            int y = (int) (Math.random() * this.maxCoord);
+            position = new Vector2d(x, y);
+        } while(objectAt(position) == null);
+
+        this.mapElements.add(new Grass(position));
     }
 }
