@@ -2,12 +2,11 @@ package agh.ics.oop;
 
 import java.util.ArrayList;
 
-public class Animal {
+public class Animal extends AbstractWorldMapElement {
     private MapDirection orientation = MapDirection.NORTH;
-    private Vector2d position = new Vector2d(0,0); // Domyślna pozycja jedyna, którą możemy zagwarantować dla każdej mapy
     private final IWorldMap map;
 
-    // Konstruktor bez parametrów tylko na potrzeby testów
+    // Parameterless constructor for testing purposes only
     public Animal() {
         this.position = new Vector2d(2, 2);
         this.map = new RectangularMap(5, 5);
@@ -26,10 +25,7 @@ public class Animal {
         return orientation;
     }
 
-    public Vector2d getPosition() {
-        return position;
-    }
-
+    @Override
     public String toString() {
         return switch (this.orientation) {
             case NORTH -> "^";

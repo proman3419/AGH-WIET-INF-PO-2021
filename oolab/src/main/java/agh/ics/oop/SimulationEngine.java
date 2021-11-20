@@ -8,15 +8,6 @@ public class SimulationEngine implements IEngine {
     private final IWorldMap map;
     private final List<Animal> animals;
 
-    public List<Vector2d> getAnimalsPositions() {
-        List<Vector2d> animalsPositions = new ArrayList<>();
-
-        for (Animal animal : this.animals)
-            animalsPositions.add(animal.getPosition());
-
-        return animalsPositions;
-    }
-
     public SimulationEngine(List<MoveDirection> directions, IWorldMap map, List<Vector2d> positions) {
         this.directions = directions;
         this.map = map;
@@ -27,6 +18,15 @@ public class SimulationEngine implements IEngine {
             this.map.place(animal);
             this.animals.add(animal);
         }
+    }
+
+    public List<Vector2d> getAnimalsPositions() {
+        List<Vector2d> animalsPositions = new ArrayList<>();
+
+        for (Animal animal : this.animals)
+            animalsPositions.add(animal.getPosition());
+
+        return animalsPositions;
     }
 
     @Override
