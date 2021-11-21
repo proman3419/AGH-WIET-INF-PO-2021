@@ -37,7 +37,7 @@ public class Animal extends AbstractWorldMapElement {
 
     private boolean eatAttempt(Object objectAt, Vector2d newPosition) {
         if (objectAt instanceof Grass) {
-            ((AbstractWorldMap) this.map).mapElements.remove(objectAt);
+            this.map.mapElements.remove(objectAt);
             return true;
         }
 
