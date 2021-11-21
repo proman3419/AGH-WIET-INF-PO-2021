@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Animal extends AbstractWorldMapElement {
     private MapDirection orientation = MapDirection.NORTH;
-    private final IWorldMap map;
+    private final AbstractWorldMap map;
 
     // Parameterless constructor for testing purposes only
     public Animal() {
@@ -12,11 +12,11 @@ public class Animal extends AbstractWorldMapElement {
         this.map = new RectangularMap(5, 5);
     }
 
-    public Animal(IWorldMap map) {
+    public Animal(AbstractWorldMap map) {
         this.map = map;
     }
 
-    public Animal(IWorldMap map, Vector2d initialPosition) {
+    public Animal(AbstractWorldMap map, Vector2d initialPosition) {
         this.map = map;
         this.position = initialPosition;
     }

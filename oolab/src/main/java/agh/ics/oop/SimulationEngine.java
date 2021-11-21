@@ -5,10 +5,10 @@ import java.util.List;
 
 public class SimulationEngine implements IEngine {
     private final List<MoveDirection> directions;
-    private final IWorldMap map;
+    private final AbstractWorldMap map;
     private final List<Animal> animals;
 
-    public SimulationEngine(List<MoveDirection> directions, IWorldMap map, List<Vector2d> positions) {
+    public SimulationEngine(List<MoveDirection> directions, AbstractWorldMap map, List<Vector2d> positions) {
         this.directions = directions;
         this.map = map;
         this.animals = new ArrayList<>();

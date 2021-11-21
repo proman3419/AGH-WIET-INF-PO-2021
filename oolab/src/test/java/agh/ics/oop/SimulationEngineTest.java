@@ -23,7 +23,7 @@ public class SimulationEngineTest {
     void runTest() {
         List<MoveDirection> directions = new OptionsParser().parse(new String[]{"f", "b", "r", "l", "f", "f", "r", "r",
                 "f", "f", "f", "f", "f", "f", "f", "f"});
-        IWorldMap map = new RectangularMap(10, 5);
+        AbstractWorldMap map = new RectangularMap(10, 5);
         List<Vector2d> positions = new ArrayList<>(Arrays.asList(new Vector2d(2, 2), new Vector2d(3, 4)));
         SimulationEngine engine = new SimulationEngine(directions, map, positions);
         engine.run();
@@ -37,7 +37,7 @@ public class SimulationEngineTest {
     void runTest2() {
         List<MoveDirection> directions = new OptionsParser().parse(new String[]{"r", "f", "l", "l", "l", "f", "f", "r",
                 "b", "l", "f", "f", "f", "r", "l", "b"});
-        IWorldMap map = new RectangularMap(10, 17);
+        AbstractWorldMap map = new RectangularMap(10, 17);
         List<Vector2d> positions = new ArrayList<>(Arrays.asList(new Vector2d(1, 3), new Vector2d(3, 7)));
         SimulationEngine engine = new SimulationEngine(directions, map, positions);
         engine.run();
@@ -54,7 +54,7 @@ public class SimulationEngineTest {
                 "f", "l", "l", "r", "r", "b", "b", "f", "l", "l", "r", "r", "b", "b", "f", "f", "f", "f", "r", "f", "l",
                 "r", "b", "b", "f", "r", "f", "f", "r", "l", "f", "f", "r", "b", "l", "r", "r", "b", "l", "f", "r", "r",
                 "f", "l", "r", "r", "l", "b", "b", "f", "f", "l", "r", "r", "b", "b", "f", "b", "f", "b", "r", "f", "l",});
-        IWorldMap map = new RectangularMap(10, 15);
+        AbstractWorldMap map = new RectangularMap(10, 15);
         List<Vector2d> positions = new ArrayList<>(Arrays.asList(new Vector2d(4, 2), new Vector2d(0, 7),
                 new Vector2d(3, 12), new Vector2d(6, 3), new Vector2d(9, 14)));
         SimulationEngine engine = new SimulationEngine(directions, map, positions);
