@@ -1,24 +1,29 @@
 package agh.ics.oop;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Animal extends AbstractWorldMapElement {
     private MapDirection orientation = MapDirection.NORTH;
     private final AbstractWorldMap map;
+    private final List<IPositionChangeObserver> observers = new ArrayList<>();
 
     // Parameterless constructor for testing purposes only
     public Animal() {
         this.position = new Vector2d(2, 2);
         this.map = new RectangularMap(5, 5);
+        this.addObserver(this.map);
     }
 
     public Animal(AbstractWorldMap map) {
         this.map = map;
+        this.addObserver(this.map);
     }
 
     public Animal(AbstractWorldMap map, Vector2d initialPosition) {
         this.map = map;
         this.position = initialPosition;
+        this.addObserver(this.map);
     }
 
     public MapDirection getOrientation() {
@@ -35,15 +40,6 @@ public class Animal extends AbstractWorldMapElement {
         };
     }
 
-    private boolean eatAttempt(Object objectAt, Vector2d newPosition) {
-        if (objectAt instanceof Grass) {
-            this.map.mapElements.remove(objectAt);
-            return true;
-        }
-
-        return false;
-    }
-
     public Animal move(MoveDirection direction) {
         switch (direction) {
             case RIGHT -> this.orientation = this.orientation.next();
@@ -57,10 +53,15 @@ public class Animal extends AbstractWorldMapElement {
                 if (this.map.canMoveTo(newPosition)) {
                     Object objectAt = this.map.objectAt(newPosition);
 
-                    if (objectAt == null || objectAt instanceof Grass)
-                        this.position = newPosition;
+                    if (objectAt instanceof Grass)
+                        this.map.mapElements.remove(((Grass) objectAt).getPosition());
 
-                    if (eatAttempt(objectAt, newPosition))
+                    if (objectAt == null || objectAt instanceof Grass) {
+                        positionChanged(this.position, newPosition);
+                        this.position = newPosition;
+                    }
+
+                    if (objectAt instanceof Grass)
                         ((GrassField) this.map).spawnGrass();
                 }
             }
@@ -74,5 +75,18 @@ public class Animal extends AbstractWorldMapElement {
             this.move(direction);
 
         return this;
+    }
+
+    private void addObserver(IPositionChangeObserver observer) {
+        this.observers.add(observer);
+    }
+
+    private void removeObserver(IPositionChangeObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    private void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        for (IPositionChangeObserver observer : this.observers)
+            observer.positionChanged(oldPosition, newPosition);
     }
 }
