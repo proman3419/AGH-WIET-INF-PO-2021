@@ -20,7 +20,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
             return true;
         }
 
-        return false;
+        throw new IllegalArgumentException(animal.getPosition() + " is occupied by another animal therefore the new animal can't be placed there");
     }
 
     @Override

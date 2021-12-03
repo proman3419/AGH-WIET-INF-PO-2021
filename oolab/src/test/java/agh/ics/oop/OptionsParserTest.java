@@ -6,6 +6,7 @@ import java.util.List;
 
 import static agh.ics.oop.MoveDirection.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OptionsParserTest {
     void parseTest(MoveDirection[] expected, String[] input) {
@@ -24,8 +25,8 @@ public class OptionsParserTest {
         parseTest(new MoveDirection[]{LEFT}, new String[]{"l"});
         parseTest(new MoveDirection[]{RIGHT}, new String[]{"r"});
 
-        parseTest(new MoveDirection[]{}, new String[]{"nonsense"});
-        parseTest(new MoveDirection[]{FORWARD, BACKWARD}, new String[]{"f", "nonsense", "b"});
+        assertThrows(IllegalArgumentException.class, () -> parseTest(new MoveDirection[]{}, new String[]{"nonsense"}));
+        assertThrows(IllegalArgumentException.class, () -> parseTest(new MoveDirection[]{FORWARD, BACKWARD}, new String[]{"f", "nonsense", "b"}));
         parseTest(new MoveDirection[]{FORWARD, BACKWARD, LEFT, RIGHT}, new String[]{"f", "b", "l", "r"});
     }
 }

@@ -29,7 +29,7 @@ public class RectangularMapTest {
         RectangularMap map = new RectangularMap(this.width, this.height);
 
         assertTrue(map.place(new Animal(map)));
-        assertFalse(map.place(new Animal(map)));
+        assertThrows(IllegalArgumentException.class, () -> map.place(new Animal(map)));
         assertTrue(map.place(new Animal(map, new Vector2d(this.width-1, this.height-1))));
     }
 

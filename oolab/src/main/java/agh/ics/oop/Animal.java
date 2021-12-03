@@ -51,18 +51,8 @@ public class Animal extends AbstractWorldMapElement {
                 Vector2d newPosition = this.position.add(unitVector);
 
                 if (this.map.canMoveTo(newPosition)) {
-                    Object objectAt = this.map.objectAt(newPosition);
-
-                    if (objectAt instanceof Grass)
-                        this.map.mapElements.remove(((Grass) objectAt).getPosition());
-
-                    if (objectAt == null || objectAt instanceof Grass) {
-                        positionChanged(this.position, newPosition);
-                        this.position = newPosition;
-                    }
-
-                    if (objectAt instanceof Grass)
-                        ((GrassField) this.map).spawnGrass();
+                    positionChanged(this.position, newPosition);
+                    this.position = newPosition;
                 }
             }
         }
