@@ -37,8 +37,6 @@ public class GrassField extends AbstractWorldMap {
     public String toString() {
         this.upperRight = this.mapBoundary.getUpperRight();
         this.lowerLeft = this.mapBoundary.getLowerLeft();
-        System.out.println(this.upperRight);
-        System.out.println(this.lowerLeft);
 
         return super.toString();
     }
