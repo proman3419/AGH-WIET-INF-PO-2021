@@ -33,10 +33,14 @@ public class GrassField extends AbstractWorldMap {
         return true;
     }
 
-    @Override
-    public String toString() {
+    public void updateCorners() {
         this.upperRight = this.mapBoundary.getUpperRight();
         this.lowerLeft = this.mapBoundary.getLowerLeft();
+    }
+
+    @Override
+    public String toString() {
+        updateCorners();
 
         return super.toString();
     }
