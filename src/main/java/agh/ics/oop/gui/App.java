@@ -2,6 +2,7 @@ package agh.ics.oop.gui;
 
 import agh.ics.oop.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -16,24 +17,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class App extends Application {
+public class App extends Application implements IAnimalMoveObserver {
     private final GridPane grid = new GridPane();
-    private final Scene scene = new Scene(this.grid);
-    private final int fieldWidth = 60;
-    private final int fieldHeight = 60;
-    private final int representationWidth = 30;
-    private final int representationHeight = 30;
     private AbstractWorldMap map;
+    private SimulationEngine simulationEngine;
 
     public void init() {
         try {
             List<MoveDirection> directions = new OptionsParser().parse(getParameters().getRaw().toArray(String[]::new));
-            this.map = new GrassField(10);
             List<Vector2d> positions = new ArrayList<>(Arrays.asList(new Vector2d(2, 2), new Vector2d(2, 4),
                     new Vector2d(-2, -5)));
-            IEngine engine = new SimulationEngine(directions, map, positions);
-            engine.run();
-            displayMap();
+
+            this.map = new GrassField(10);
+            this.simulationEngine = new SimulationEngine(directions, this.map, positions);
+            this.simulationEngine.addAnimalMoveObserver(this);
         }
         catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
@@ -41,13 +38,16 @@ public class App extends Application {
     }
 
     public void start(Stage primaryStage) {
-        primaryStage.setScene(this.scene);
+        primaryStage.setScene(new Scene(this.grid));
         primaryStage.show();
+
+        Thread simulationEngineThread = new Thread(this.simulationEngine);
+        simulationEngineThread.start();
     }
 
     private void displayMapBorderPart(int x, int y, int mapX, int mapY) {
         String representation = " ";
-        if (x == 0 && y == 0) representation = "y/x";
+        if (x == 0 && y == 0) representation = "y\\x";
         else if (x == 0) representation = Integer.toString(mapY);
         else representation = Integer.toString(mapX);
 
@@ -58,11 +58,12 @@ public class App extends Application {
 
     private void formatGrid(int maxX, int maxY) {
         for (int y = 0; y <= maxY; y++)
-            this.grid.getRowConstraints().add(new RowConstraints(this.fieldHeight));
+            this.grid.getRowConstraints().add(new RowConstraints(60));
 
         for (int x = 0; x <= maxX; x++)
-            this.grid.getColumnConstraints().add(new ColumnConstraints(this.fieldWidth));
+            this.grid.getColumnConstraints().add(new ColumnConstraints(60));
 
+        this.grid.setGridLinesVisible(false);
         this.grid.setGridLinesVisible(true);
     }
 
@@ -86,7 +87,7 @@ public class App extends Application {
                 }
                 else {
                     GuiElementBox guiElementBox = new GuiElementBox(this.map.objectAt(new Vector2d(mapX, mapY)));
-                    VBox vBox = guiElementBox.getGuiRepresentation(this.representationWidth, this.representationHeight);
+                    VBox vBox = guiElementBox.getGuiRepresentation();
                     this.grid.add(vBox, x, y, 1, 1);
                     GridPane.setHalignment(vBox, HPos.CENTER);
                     GridPane.setValignment(vBox, VPos.CENTER);
@@ -95,5 +96,15 @@ public class App extends Application {
         }
 
         formatGrid(maxX, maxY);
+    }
+
+    @Override
+    public void animalMove() {
+        Platform.runLater(() -> {
+            this.grid.getChildren().clear();
+            this.grid.getRowConstraints().clear();
+            this.grid.getColumnConstraints().clear();
+            displayMap();
+        });
     }
 }

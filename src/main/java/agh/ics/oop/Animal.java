@@ -92,6 +92,6 @@ public class Animal extends AbstractWorldMapElement {
 
     @Override
     public String toLabelString() {
-        return "Z " + this.position.toString();
+        return this.toString() + this.position.toString();
     }
 }

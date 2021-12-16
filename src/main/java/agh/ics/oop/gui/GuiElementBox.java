@@ -17,7 +17,7 @@ public class GuiElementBox {
         this.mapElement = mapElement;
     }
 
-    public VBox getGuiRepresentation(int width, int height) {
+    public VBox getGuiRepresentation() {
         if (this.mapElement == null)
             return new VBox();
 
@@ -28,8 +28,8 @@ public class GuiElementBox {
             e.printStackTrace();
         }
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
+        imageView.setFitWidth(30);
+        imageView.setFitHeight(30);
 
         Label label = new Label(this.mapElement.toLabelString());
 
