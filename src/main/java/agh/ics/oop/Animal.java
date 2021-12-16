@@ -79,4 +79,19 @@ public class Animal extends AbstractWorldMapElement {
         for (IPositionChangeObserver observer : this.observers)
             observer.positionChanged(oldPosition, newPosition);
     }
+
+    @Override
+    public String getRepresentationImagePath() {
+        return switch (this.orientation) {
+            case NORTH -> "src/main/resources/up.png";
+            case EAST -> "src/main/resources/right.png";
+            case SOUTH -> "src/main/resources/down.png";
+            case WEST -> "src/main/resources/left.png";
+        };
+    }
+
+    @Override
+    public String toLabelString() {
+        return "Z " + this.position.toString();
+    }
 }
