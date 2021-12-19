@@ -38,7 +38,7 @@ public class SimulationEngine implements IEngine, Runnable {
 
     private void update() {
         for (IAnimalMoveObserver animalMoveObserver : this.animalMoveObservers)
-            animalMoveObserver.animalMove();
+            animalMoveObserver.animalMoved();
 
         System.out.println(this.map);
 

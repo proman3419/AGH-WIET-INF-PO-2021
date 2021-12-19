@@ -112,7 +112,7 @@ public class App extends Application implements IAnimalMoveObserver {
     }
 
     @Override
-    public void animalMove() {
+    public void animalMoved() {
         Platform.runLater(() -> {
             this.grid.getChildren().clear();
             this.grid.getRowConstraints().clear();
