@@ -5,14 +5,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SimulationEngine implements IEngine, Runnable {
-    private final List<MoveDirection> directions;
+    protected List<MoveDirection> directions;
     private final AbstractWorldMap map;
     private final List<Animal> animals;
     private final List<IAnimalMoveObserver> animalMoveObservers = new LinkedList<>();
     private final int moveDelay = 300;
 
     public SimulationEngine(List<MoveDirection> directions, AbstractWorldMap map, List<Vector2d> positions) {
+        this(map, positions);
         this.directions = directions;
+    }
+
+    public SimulationEngine(AbstractWorldMap map, List<Vector2d> positions) {
         this.map = map;
         this.animals = new ArrayList<>();
 

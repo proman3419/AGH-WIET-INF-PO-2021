@@ -6,11 +6,10 @@ import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -20,29 +19,43 @@ import java.util.List;
 public class App extends Application implements IAnimalMoveObserver {
     private final GridPane grid = new GridPane();
     private AbstractWorldMap map;
-    private SimulationEngine simulationEngine;
+    private ThreadedSimulationEngine threadedSimulationEngine;
 
     public void init() {
         try {
-            List<MoveDirection> directions = new OptionsParser().parse(getParameters().getRaw().toArray(String[]::new));
-            List<Vector2d> positions = new ArrayList<>(Arrays.asList(new Vector2d(2, 2), new Vector2d(2, 4),
-                    new Vector2d(-2, -5)));
-
-            this.map = new GrassField(10);
-            this.simulationEngine = new SimulationEngine(directions, this.map, positions);
-            this.simulationEngine.addAnimalMoveObserver(this);
+            List<Vector2d> positions = new ArrayList<>(Arrays.asList(new Vector2d(1, 0), new Vector2d(2, 1),
+                    new Vector2d(-2, -1)));
+            this.map = new GrassField(5);
+            this.threadedSimulationEngine = new ThreadedSimulationEngine(this.map, positions);
+            this.threadedSimulationEngine.addAnimalMoveObserver(this);
         }
         catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    public void start(Stage primaryStage) {
-        primaryStage.setScene(new Scene(this.grid));
-        primaryStage.show();
+    private HBox createUserInterface() {
+        TextField inputField = new TextField();
+        Button simulateButton = new Button("Simulate");
+        HBox userInterface = new HBox(inputField, simulateButton);
 
-        Thread simulationEngineThread = new Thread(this.simulationEngine);
-        simulationEngineThread.start();
+        simulateButton.setOnAction(click -> {
+            List<MoveDirection> moveDirections = new OptionsParser().parse(inputField.getText().split(" "));
+            this.threadedSimulationEngine.setDirections(moveDirections);
+            Thread simulationEngineThread = new Thread(this.threadedSimulationEngine);
+            simulationEngineThread.start();
+        });
+
+        return userInterface;
+    }
+
+    public void start(Stage primaryStage) {
+        HBox userInterface = createUserInterface();
+        VBox appInterface = new VBox(userInterface, this.grid);
+
+        primaryStage.setScene(new Scene(appInterface));
+        primaryStage.show();
+        displayMap();
     }
 
     private void displayMapBorderPart(int x, int y, int mapX, int mapY) {
