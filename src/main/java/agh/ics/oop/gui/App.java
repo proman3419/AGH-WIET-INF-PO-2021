@@ -53,7 +53,7 @@ public class App extends Application implements IAnimalMoveObserver {
         HBox userInterface = createUserInterface();
         VBox appInterface = new VBox(userInterface, this.grid);
 
-        primaryStage.setScene(new Scene(appInterface));
+        primaryStage.setScene(new Scene(appInterface, 1366, 768));
         primaryStage.show();
         displayMap();
     }
